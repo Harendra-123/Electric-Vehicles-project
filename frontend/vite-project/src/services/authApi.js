@@ -7,3 +7,7 @@ export const signupUser = (userData) => {
 export const loginUser = (loginData) => {
     return api.post("/api/auth/login", loginData);
 };
+
+export const forgotPassword = (data) => {
+    return api.post("/api/auth/forgot-password", data);
+};

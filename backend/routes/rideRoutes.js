@@ -30,8 +30,6 @@ router.post(
 
 
         if (
-            !driver_id ||
-            !vehicle_id ||
             !pickup ||
             !destination ||
             !distance ||
@@ -40,13 +38,12 @@ router.post(
 
             return res.status(400).json({
                 success: false,
-                message: "All ride fields are required"
+                message: "Pickup, destination, distance and fare are required"
             });
 
         }
 
 
-        // user_id JWT se milega
         const user_id = req.user.id;
 
 
@@ -70,8 +67,8 @@ router.post(
             sql,
             [
                 user_id,
-                driver_id,
-                vehicle_id,
+                driver_id ?? null,
+                vehicle_id ?? null,
                 pickup,
                 destination,
                 distance,
@@ -105,6 +102,83 @@ router.post(
     }
 );
 
+
+// ==================================================
+// GET DRIVER STATUS / AVAILABILITY
+// DRIVER ONLY
+// ==================================================
+
+router.get(
+    "/driver/availability",
+    authMiddleware,
+    roleMiddleware("driver"),
+    (req, res) => {
+        const driverUserId = req.user.id;
+
+        const sql = `
+            SELECT is_online
+            FROM drivers
+            WHERE user_id = ?
+        `;
+
+        db.query(sql, [driverUserId], (err, results) => {
+            if (err) {
+                console.log("Driver availability error:", err);
+                return res.status(500).json({
+                    success: false,
+                    message: "Failed to fetch driver availability"
+                });
+            }
+
+            const is_online = results[0]?.is_online === 1 || results[0]?.is_online === true;
+
+            res.status(200).json({
+                success: true,
+                is_online
+            });
+        });
+    }
+);
+
+router.put(
+    "/driver/availability",
+    authMiddleware,
+    roleMiddleware("driver"),
+    (req, res) => {
+        const driverUserId = req.user.id;
+        const { is_online } = req.body;
+
+        if (typeof is_online !== "boolean") {
+            return res.status(400).json({
+                success: false,
+                message: "is_online must be a boolean value"
+            });
+        }
+
+        const sql = `
+            UPDATE drivers
+            SET is_online = ?
+            WHERE user_id = ?
+        `;
+
+        db.query(sql, [is_online ? 1 : 0, driverUserId], (err) => {
+            if (err) {
+                console.log("Driver availability update error:", err);
+                return res.status(500).json({
+                    success: false,
+                    message: "Failed to update driver availability",
+                    error: err.message
+                });
+            }
+
+            res.status(200).json({
+                success: true,
+                message: is_online ? "Driver went online" : "Driver went offline",
+                is_online: !!is_online
+            });
+        });
+    }
+);
 
 // ==================================================
 // GET MY RIDES
@@ -194,69 +268,90 @@ router.get(
 
         const driverUserId = req.user.id;
 
-        const sql = `
-            SELECT
-                rides.id,
-                rides.user_id,
-                rides.driver_id,
-                rides.vehicle_id,
-                rides.pickup,
-                rides.destination,
-                rides.distance,
-                rides.fare,
-                rides.status,
-
-                users.name AS user_name,
-                users.phone AS user_phone,
-
-                vehicles.model,
-                vehicles.vehicle_number,
-                vehicles.vehicle_type
-
-            FROM rides
-
-            JOIN drivers
-            ON rides.driver_id = drivers.id
-
-            JOIN users
-            ON rides.user_id = users.id
-
-            LEFT JOIN vehicles
-            ON rides.vehicle_id = vehicles.id
-
-            WHERE drivers.user_id = ?
-            AND rides.status = 'requested'
-
-            ORDER BY rides.id DESC
+        const driverLookupSql = `
+            SELECT id
+            FROM drivers
+            WHERE user_id = ?
         `;
 
-        db.query(
-            sql,
-            [driverUserId],
-            (err, results) => {
+        db.query(driverLookupSql, [driverUserId], (driverLookupErr, driverRows) => {
+            if (driverLookupErr) {
+                console.log("Driver lookup error:", driverLookupErr);
+                return res.status(500).json({
+                    success: false,
+                    message: "Failed to fetch driver profile"
+                });
+            }
 
-                if (err) {
+            const currentDriverId = driverRows[0]?.id;
 
-                    console.log(
-                        "Driver requests error:",
-                        err
-                    );
+            if (!currentDriverId) {
+                return res.status(200).json({
+                    success: true,
+                    requests: []
+                });
+            }
 
-                    return res.status(500).json({
-                        success: false,
-                        message: "Failed to fetch ride requests",
-                        error: err.message
+            const sql = `
+                SELECT
+                    rides.id,
+                    rides.user_id,
+                    rides.driver_id,
+                    rides.vehicle_id,
+                    rides.pickup,
+                    rides.destination,
+                    rides.distance,
+                    rides.fare,
+                    rides.status,
+
+                    users.name AS user_name,
+                    users.phone AS user_phone,
+
+                    vehicles.model,
+                    vehicles.vehicle_number,
+                    vehicles.vehicle_type
+
+                FROM rides
+                JOIN users
+                ON rides.user_id = users.id
+                LEFT JOIN vehicles
+                ON rides.vehicle_id = vehicles.id
+
+                WHERE (
+                    rides.status = 'requested'
+                    OR (rides.driver_id = ? AND rides.status IN ('accepted', 'started'))
+                )
+                ORDER BY rides.id DESC
+            `;
+
+            db.query(
+                sql,
+                [currentDriverId],
+                (err, results) => {
+
+                    if (err) {
+
+                        console.log(
+                            "Driver requests error:",
+                            err
+                        );
+
+                        return res.status(500).json({
+                            success: false,
+                            message: "Failed to fetch ride requests",
+                            error: err.message
+                        });
+
+                    }
+
+                    res.status(200).json({
+                        success: true,
+                        requests: results
                     });
 
                 }
-
-                res.status(200).json({
-                    success: true,
-                    requests: results
-                });
-
-            }
-        );
+            );
+        });
 
     }
 );
@@ -273,50 +368,72 @@ router.put(
         const rideId = req.params.rideId;
         const driverUserId = req.user.id;
 
-        const sql = `
-            UPDATE rides
-            JOIN drivers
-            ON rides.driver_id = drivers.id
-            SET rides.status = 'accepted'
-            WHERE rides.id = ?
-            AND drivers.user_id = ?
-            AND rides.status = 'requested'
+        const driverLookupSql = `
+            SELECT id
+            FROM drivers
+            WHERE user_id = ?
         `;
 
-        db.query(
-            sql,
-            [rideId, driverUserId],
-            (err, result) => {
-
-                if (err) {
-
-                    console.log(err);
-
-                    return res.status(500).json({
-                        success: false,
-                        message: "Failed to accept ride",
-                        error: err.message
-                    });
-
-                }
-
-                if (result.affectedRows === 0) {
-
-                    return res.status(404).json({
-                        success: false,
-                        message: "Ride not found or already accepted"
-                    });
-
-                }
-
-                res.json({
-                    success: true,
-                    message: "Ride accepted successfully",
-                    rideId: rideId
+        db.query(driverLookupSql, [driverUserId], (driverLookupErr, driverRows) => {
+            if (driverLookupErr) {
+                console.log("Driver lookup error:", driverLookupErr);
+                return res.status(500).json({
+                    success: false,
+                    message: "Failed to fetch driver profile"
                 });
-
             }
-        );
+
+            const currentDriverId = driverRows[0]?.id;
+
+            if (!currentDriverId) {
+                return res.status(404).json({
+                    success: false,
+                    message: "Driver profile not found"
+                });
+            }
+
+            const sql = `
+                UPDATE rides
+                SET driver_id = ?, status = 'accepted'
+                WHERE id = ?
+                AND status = 'requested'
+            `;
+
+            db.query(
+                sql,
+                [currentDriverId, rideId],
+                (err, result) => {
+
+                    if (err) {
+
+                        console.log(err);
+
+                        return res.status(500).json({
+                            success: false,
+                            message: "Failed to accept ride",
+                            error: err.message
+                        });
+
+                    }
+
+                    if (result.affectedRows === 0) {
+
+                        return res.status(404).json({
+                            success: false,
+                            message: "Ride not found or already accepted"
+                        });
+
+                    }
+
+                    res.json({
+                        success: true,
+                        message: "Ride accepted successfully",
+                        rideId: rideId
+                    });
+
+                }
+            );
+        });
 
     }
 );
@@ -453,6 +570,11 @@ router.get(
             SELECT
                 r.id AS ride_id,
                 r.user_id,
+                r.driver_id,
+                r.vehicle_id,
+                r.pickup,
+                r.destination,
+                r.distance,
                 r.fare,
                 r.status AS ride_status,
 
@@ -496,7 +618,6 @@ router.get(
 
     }
 );
-
 
 // ==================================================
 // GET RIDE BY ID
@@ -699,6 +820,74 @@ router.delete(
 
                     }
                 );
+
+            }
+        );
+
+    }
+);
+
+// ================= GET DRIVER SUMMARY =================
+
+router.get(
+    "/driver/summary",
+    authMiddleware,
+    roleMiddleware("driver"),
+    (req, res) => {
+
+        const driverUserId = req.user.id;
+
+        const sql = `
+            SELECT
+                d.id AS driver_id,
+                u.name,
+                COUNT(r.id) AS total_rides,
+                COALESCE(SUM(CASE WHEN r.status = 'completed' THEN r.fare ELSE 0 END), 0) AS total_earnings,
+                COALESCE(SUM(CASE WHEN r.status IN ('accepted', 'started') THEN 1 ELSE 0 END), 0) AS active_rides,
+                MAX(CASE WHEN v.model IS NOT NULL THEN v.model ELSE 'EV Vehicle' END) AS vehicle_name,
+                MAX(CASE WHEN v.vehicle_number IS NOT NULL THEN v.vehicle_number ELSE 'NA' END) AS vehicle_number
+            FROM drivers d
+            JOIN users u ON u.id = d.user_id
+            LEFT JOIN rides r ON r.driver_id = d.id
+            LEFT JOIN vehicles v ON v.id = r.vehicle_id
+            WHERE d.user_id = ?
+            GROUP BY d.id, u.name
+        `;
+
+        db.query(
+            sql,
+            [driverUserId],
+            (err, results) => {
+
+                if (err) {
+                    console.log("Driver summary error:", err);
+
+                    return res.status(500).json({
+                        success: false,
+                        message: "Failed to fetch driver summary",
+                        error: err.message
+                    });
+                }
+
+                const summary = results[0] || {
+                    driver_id: null,
+                    name: req.user.name || "Driver",
+                    total_rides: 0,
+                    total_earnings: 0,
+                    active_rides: 0,
+                    vehicle_name: "EV Vehicle",
+                    vehicle_number: "NA"
+                };
+
+                res.status(200).json({
+                    success: true,
+                    summary: {
+                        ...summary,
+                        rating: 4.8,
+                        wallet: Number(summary.total_earnings || 0),
+                        todayEarning: Number(summary.total_earnings || 0)
+                    }
+                });
 
             }
         );

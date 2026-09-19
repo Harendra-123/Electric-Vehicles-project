@@ -1,0 +1,431 @@
+/* =====================================================
+   DRIVER EARNINGS PAGE
+===================================================== */
+
+.driver-earnings-page {
+  width: 100%;
+  min-height: 100vh;
+  background: #ffffff;
+  color: #202124;
+  display: flex;
+  overflow-x: hidden;
+}
+
+/* =====================================================
+   DESKTOP SIDEBAR
+===================================================== */
+
+.driver-earnings-sidebar {
+  width: 235px;
+  min-height: 100vh;
+  flex-shrink: 0;
+  background: #ffffff;
+  border-right: 1px solid #e8e8e8;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+}
+
+.driver-earnings-logo {
+  height: 75px;
+  padding: 0 25px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.driver-earnings-logo-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background: #079b70;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.driver-earnings-logo span {
+  font-size: 20px;
+  font-weight: 800;
+  color: #079b70;
+}
+
+.driver-earnings-sidebar-nav {
+  padding: 25px 13px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.driver-earnings-side-link {
+  height: 48px;
+  padding: 0 15px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  text-decoration: none;
+  color: #686868;
+  font-size: 14px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.driver-earnings-side-link:hover {
+  background: #f1f8f5;
+  color: #079b70;
+}
+
+.driver-earnings-side-link.active {
+  background: #e2f8ef;
+  color: #079b70;
+}
+
+/* =====================================================
+   MAIN
+===================================================== */
+
+.driver-earnings-main {
+  width: calc(100% - 235px);
+  min-height: 100vh;
+  margin-left: 235px;
+  background: #f6fbf9;
+  padding: 32px 28px 40px;
+}
+
+.driver-earnings-header {
+  margin-bottom: 22px;
+}
+
+.driver-earnings-label {
+  margin: 0 0 10px;
+  color: #5a6662;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.driver-earnings-header h1 {
+  margin: 0;
+  font-size: 52px;
+  line-height: 1.1;
+  font-weight: 800;
+  color: #1d2422;
+}
+
+.driver-earnings-mini-card {
+  margin-top: 18px;
+  width: fit-content;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 18px;
+  border-radius: 12px;
+  background: #d7f6ea;
+  color: #0d7b5c;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.driver-earnings-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.driver-earnings-card {
+  background: #ffffff;
+  border: 1px solid #e9efed;
+  border-radius: 18px;
+  padding: 22px 18px 18px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.04);
+}
+
+.driver-earnings-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.driver-earnings-icon.green {
+  background: #dff9eb;
+  color: #0a8a62;
+}
+
+.driver-earnings-icon.blue {
+  background: #e6f1ff;
+  color: #1d74e9;
+}
+
+.driver-earnings-icon.orange {
+  background: #fff0dc;
+  color: #d78a04;
+}
+
+.driver-earnings-card strong {
+  display: block;
+  font-size: 36px;
+  line-height: 1.2;
+  color: #1d2422;
+  margin-bottom: 4px;
+}
+
+.driver-earnings-card span {
+  font-size: 16px;
+  color: #58655f;
+}
+
+.driver-earnings-content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.driver-earnings-panel {
+  background: #ffffff;
+  border: 1px solid #eaf1ee;
+  border-radius: 18px;
+  padding: 18px 18px 16px;
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.03);
+}
+
+.panel-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.panel-heading h2 {
+  margin: 0;
+  font-size: 18px;
+  color: #1f2422;
+}
+
+.driver-earnings-bars {
+  height: 200px;
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.driver-earnings-bar-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: end;
+  gap: 8px;
+}
+
+.driver-earnings-bar-wrap {
+  width: 100%;
+  height: 150px;
+  display: flex;
+  align-items: end;
+  justify-content: center;
+}
+
+.driver-earnings-bar {
+  width: 100%;
+  max-width: 42px;
+  background: linear-gradient(180deg, #0d9b70 0%, #7fe2bb 100%);
+  border-radius: 10px 10px 0 0;
+}
+
+.driver-earnings-bar-group span {
+  font-size: 12px;
+  color: #5e6b67;
+  font-weight: 600;
+}
+
+.payout-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid #eef2f1;
+  font-size: 16px;
+  color: #4b5652;
+}
+
+.payout-row strong {
+  color: #1a1f1d;
+  font-size: 17px;
+}
+
+.driver-earnings-button {
+  width: 100%;
+  margin-top: 18px;
+  border: none;
+  border-radius: 12px;
+  background: #079b70;
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 14px 18px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.transactions-panel {
+  margin-bottom: 0;
+}
+
+.transaction-count {
+  font-size: 13px;
+  color: #5e6c69;
+  font-weight: 700;
+}
+
+.transaction-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.transaction-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 0;
+  border-bottom: 1px solid #edf2f1;
+}
+
+.transaction-item strong {
+  display: block;
+  margin-bottom: 4px;
+  color: #212827;
+}
+
+.transaction-item p {
+  margin: 0;
+  color: #687874;
+  font-size: 12px;
+}
+
+.transaction-right {
+  text-align: right;
+}
+
+.transaction-right strong {
+  display: block;
+  margin-bottom: 4px;
+}
+
+.transaction-right span {
+  display: inline-block;
+  border-radius: 999px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.transaction-right .completed {
+  background: #e7fff0;
+  color: #0a8a62;
+}
+
+.transaction-right .pending {
+  background: #fff3d8;
+  color: #b57a00;
+}
+
+.driver-earnings-mobile-nav {
+  display: none;
+}
+
+@media (max-width: 900px) {
+  .driver-earnings-page {
+    display: block;
+    padding-bottom: 67px;
+  }
+
+  .driver-earnings-sidebar {
+    display: none;
+  }
+
+  .driver-earnings-main {
+    width: 100%;
+    margin-left: 0;
+    padding: 20px 18px 28px;
+  }
+
+  .driver-earnings-header {
+    margin-bottom: 20px;
+  }
+
+  .driver-earnings-label {
+    font-size: 12px;
+    letter-spacing: 0.1em;
+  }
+
+  .driver-earnings-header h1 {
+    font-size: 42px;
+  }
+
+  .driver-earnings-mini-card {
+    font-size: 16px;
+  }
+
+  .driver-earnings-card strong {
+    font-size: 30px;
+  }
+
+  .driver-earnings-mobile-nav {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 67px;
+    background: #ffffff;
+    border-top: 1px solid #e7e7e7;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    z-index: 1000;
+  }
+
+  .driver-earnings-mobile-link {
+    width: 33.333%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    text-decoration: none;
+    color: #555555;
+    font-size: 11px;
+    font-weight: 500;
+  }
+
+  .driver-earnings-mobile-link.active {
+    color: #079b70;
+    font-weight: 700;
+  }
+
+  .driver-earnings-mobile-link svg {
+    stroke-width: 2.5;
+  }
+}

@@ -341,74 +341,8 @@
 ========================================================= */
 
 .user-profile-bottom-nav {
-
-    position: fixed;
-
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    height: 58px;
-
-    background: white;
-
-    border-top: 1px solid #eeeeee;
-
-    z-index: 100;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: space-around;
-
+    display: none;
 }
-
-
-.profile-nav-item {
-
-    width: 33.33%;
-
-    height: 58px;
-
-    border: none;
-
-    background: transparent;
-
-    color: #555;
-
-    display: flex;
-
-    flex-direction: column;
-
-    align-items: center;
-
-    justify-content: center;
-
-    gap: 2px;
-
-    cursor: pointer;
-
-    font-size: 10px;
-
-    font-weight: 600;
-
-}
-
-
-.profile-nav-item.active {
-
-    color: #079c75;
-
-}
-
-
-.profile-nav-item svg {
-
-    stroke-width: 2.5;
-
-}
-
 
 
 /* =========================================================
@@ -426,6 +360,71 @@
     }
 
 
+    .user-profile-bottom-nav {
+        position: fixed;
+
+        left: 0;
+        right: 0;
+        bottom: 0;
+
+        height: 58px;
+
+        background: white;
+
+        border-top: 1px solid #eeeeee;
+
+        z-index: 100;
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: space-around;
+
+    }
+
+    .profile-nav-item {
+
+        width: 33.33%;
+
+        height: 58px;
+
+        border: none;
+
+        background: transparent;
+
+        color: #555;
+
+        display: flex;
+
+        flex-direction: column;
+
+        align-items: center;
+
+        justify-content: center;
+
+        gap: 2px;
+
+        cursor: pointer;
+
+        font-size: 10px;
+
+        font-weight: 600;
+
+    }
+
+    .profile-nav-item.active {
+
+        color: #079c75;
+
+    }
+
+    .profile-nav-item svg {
+
+        stroke-width: 2.5;
+
+    }
+
     .profile-header {
 
         min-height: 205px;
@@ -436,7 +435,6 @@
 
     }
 
-
     .profile-avatar {
 
         width: 75px;
@@ -446,20 +444,17 @@
 
     }
 
-
     .profile-header h1 {
 
         font-size: 20px;
 
     }
 
-
     .profile-header p {
 
         font-size: 12px;
 
     }
-
 
     .profile-content {
 
@@ -471,13 +466,11 @@
 
     }
 
-
     .profile-options {
 
         gap: 7px;
 
     }
-
 
     .profile-option {
 
@@ -487,7 +480,6 @@
 
     }
 
-
     .profile-option-icon {
 
         width: 37px;
@@ -495,13 +487,11 @@
 
     }
 
-
     .profile-option-title {
 
         font-size: 13px;
 
     }
-
 
     .profile-option-subtitle {
 
@@ -509,26 +499,11 @@
 
     }
 
-
     .profile-signout {
 
         margin-top: 23px;
 
         height: 44px;
-
-    }
-
-
-    .user-profile-bottom-nav {
-
-        height: 58px;
-
-    }
-
-
-    .profile-nav-item {
-
-        height: 58px;
 
     }
 
@@ -547,7 +522,8 @@
         min-height: 240px;
 
     }
-
+    
+  
 
     .profile-content {
 

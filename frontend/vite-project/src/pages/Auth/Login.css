@@ -259,46 +259,59 @@
   background: #078b65;
 }
 
-
-.auth-submit-button:active {
-  transform: scale(0.99);
-}
-
-
-/* =========================================
-   BOTTOM
-========================================= */
-
 .auth-bottom-text {
+  margin-top: 22px;
   display: flex;
-
   justify-content: center;
-
-  align-items: center;
-
-  gap: 5px;
-
-  margin-top: 23px;
-
-  font-size: 11px;
-
-  color: #777777;
+  gap: 6px;
+  color: #5d5d5d;
+  font-size: 12px;
 }
-
 
 .auth-bottom-text a {
   color: #079b70;
-
   font-weight: 700;
-
   text-decoration: none;
 }
 
+.auth-button-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -8px;
+}
 
-.auth-bottom-text a:hover {
+.auth-link-button {
+  border: none;
+  background: transparent;
+  color: #079b70;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.auth-link-button:hover {
   text-decoration: underline;
 }
 
+.reset-password-box {
+  margin-top: 18px;
+  padding: 18px 16px;
+  border: 1px solid #dfeae6;
+  border-radius: 14px;
+  background: #f8fffc;
+}
+
+.reset-password-box h3 {
+  margin: 0 0 16px;
+  color: #202124;
+  font-size: 18px;
+  text-align: center;
+}
+
+.reset-submit-button {
+  margin-top: 8px;
+}
 
 /* =========================================
    MOBILE
