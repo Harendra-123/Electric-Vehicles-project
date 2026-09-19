@@ -201,3 +201,75 @@ exports.login = (req, res) => {
     );
 
 };
+
+
+// ================= FORGOT PASSWORD =================
+
+exports.forgotPassword = (req, res) => {
+
+    const { email, newPassword } = req.body;
+
+    if (!email || !newPassword) {
+
+        return res.status(400).json({
+            success: false,
+            message: "Email and new password are required"
+        });
+
+    }
+
+    const sql = `
+        SELECT *
+        FROM users
+        WHERE email = ?
+    `;
+
+    db.query(sql, [email], async (err, results) => {
+
+        if (err) {
+
+            return res.status(500).json({
+                success: false,
+                message: "Database error"
+            });
+
+        }
+
+        if (results.length === 0) {
+
+            return res.status(404).json({
+                success: false,
+                message: "No account found with this email"
+            });
+
+        }
+
+        const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+        const updateSql = `
+            UPDATE users
+            SET password = ?
+            WHERE email = ?
+        `;
+
+        db.query(updateSql, [hashedPassword, email], (error) => {
+
+            if (error) {
+
+                return res.status(500).json({
+                    success: false,
+                    message: "Password reset failed"
+                });
+
+            }
+
+            return res.json({
+                success: true,
+                message: "Password reset successful. Please login with your new password."
+            });
+
+        });
+
+    });
+
+};

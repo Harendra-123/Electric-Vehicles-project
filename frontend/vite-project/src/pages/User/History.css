@@ -3,447 +3,217 @@
 ========================================================= */
 
 .history-page {
-
     width: 100%;
     min-height: 100vh;
-
-    background: white;
-
+    background: linear-gradient(180deg, #eefaf5 0%, #f7faf9 100%);
     color: #222;
-
-    font-family:
-        Inter,
-        Arial,
-        Helvetica,
-        sans-serif;
-
+    font-family: Inter, Arial, Helvetica, sans-serif;
     box-sizing: border-box;
-
-    padding-bottom: 65px;
-
+    padding-bottom: 90px;
 }
 
-
+.history-eyebrow {
+    margin: 0 0 8px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #6d7d78;
+}
 
 /* =========================================================
    HEADER
 ========================================================= */
 
 .history-header {
-
     width: 100%;
-
-    height: 104px;
-
-    padding: 44px 15px 15px;
-
+    padding: 28px 18px 18px;
     box-sizing: border-box;
-
-    border-bottom: 1px solid #eeeeee;
-
 }
-
 
 .history-header h1 {
-
     margin: 0;
-
-    font-size: 22px;
-
-    line-height: 26px;
-
-    font-weight: 750;
-
+    font-size: clamp(28px, 3vw, 38px);
+    line-height: 1.2;
+    font-weight: 800;
+    color: #1d2a26;
 }
-
 
 .history-header p {
-
-    margin: 3px 0 0;
-
-    font-size: 11px;
-
-    color: #666;
-
+    margin: 6px 0 0;
+    font-size: 12px;
+    color: #697771;
 }
-
-
 
 /* =========================================================
    CONTENT
 ========================================================= */
 
 .history-content {
-
     width: 100%;
-
-    min-height:
-        calc(100vh - 169px);
-
+    min-height: calc(100vh - 180px);
 }
-
-
 
 /* =========================================================
    EMPTY STATE
 ========================================================= */
 
 .history-empty {
-
     width: 100%;
-
     display: flex;
-
     flex-direction: column;
-
     align-items: center;
-
     text-align: center;
-
-    padding-top: 91px;
-
+    padding-top: 80px;
     box-sizing: border-box;
-
 }
-
 
 .empty-car {
-
     color: #d3d3d3;
-
-    margin-bottom: 23px;
-
+    margin-bottom: 20px;
 }
-
 
 .history-empty h2 {
-
     margin: 0;
-
-    font-size: 14px;
-
+    font-size: 20px;
     font-weight: 700;
-
+    color: #1d2a26;
 }
-
 
 .history-empty p {
-
     margin: 8px 0 0;
-
-    font-size: 11px;
-
+    font-size: 13px;
     color: #555;
-
 }
-
-
 
 /* =========================================================
    RIDES LIST
 ========================================================= */
 
 .rides-list {
-
     width: 100%;
-
-    max-width: 700px;
-
+    max-width: 760px;
     margin: 0 auto;
-
-    padding: 18px 14px;
-
+    padding: 8px 14px 22px;
     box-sizing: border-box;
-
     display: flex;
-
     flex-direction: column;
-
-    gap: 10px;
-
+    gap: 12px;
 }
-
 
 .ride-history-card {
-
-    background: #f5f5f5;
-
-    border-radius: 13px;
-
-    padding: 14px;
-
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid #ebf1ee;
+    border-radius: 18px;
+    padding: 16px;
+    box-shadow: 0 10px 24px rgba(13, 39, 31, 0.04);
 }
-
 
 .ride-card-top {
-
     display: flex;
-
     justify-content: space-between;
-
-    gap: 15px;
-
+    gap: 12px;
 }
-
 
 .ride-card-top h3 {
-
     margin: 0;
-
-    font-size: 14px;
-
+    font-size: 17px;
+    color: #1d2a26;
 }
-
 
 .ride-card-top p {
-
-    margin: 5px 0 0;
-
+    margin: 6px 0 0;
     font-size: 12px;
-
-    color: #555;
-
+    color: #596965;
 }
-
 
 .ride-status {
-
-    color: #079c75;
-
-    font-size: 10px;
-
-    font-weight: 700;
-
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 72px;
+    padding: 5px 8px;
+    border-radius: 999px;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
 }
 
+.ride-status.completed {
+    background: #eafbf5;
+    color: #0d8d62;
+}
+
+.ride-status.requested {
+    background: #fff2d9;
+    color: #b56b00;
+}
+
+.ride-status.accepted {
+    background: #ebf1ff;
+    color: #2d5df5;
+}
+
+.ride-card-meta {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid #edf1ee;
+}
+
+.ride-card-meta span,
+.ride-card-bottom span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: #586b66;
+    font-size: 12px;
+}
 
 .ride-card-bottom {
-
     display: flex;
-
     justify-content: space-between;
-
-    margin-top: 15px;
-
-    padding-top: 10px;
-
-    border-top: 1px solid #e2e2e2;
-
-    font-size: 11px;
-
-    color: #555;
-
-}
-
-
-
-/* =========================================================
-   BOTTOM NAV
-========================================================= */
-
-.history-bottom-nav {
-
-    position: fixed;
-
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    height: 58px;
-
-    background: white;
-
-    border-top: 1px solid #eeeeee;
-
-    z-index: 100;
-
-    display: flex;
-
-    justify-content: space-around;
-
     align-items: center;
-
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
 }
 
-
-.history-nav-item {
-
-    width: 33.33%;
-
-    height: 58px;
-
+.ride-details-link {
+    margin-top: 14px;
     border: none;
-
-    background: transparent;
-
-    color: #555;
-
-    display: flex;
-
-    flex-direction: column;
-
-    justify-content: center;
-
-    align-items: center;
-
-    gap: 2px;
-
-    font-size: 10px;
-
-    font-weight: 600;
-
+    border-radius: 10px;
+    background: linear-gradient(135deg, #0ea5e9, #2563eb);
+    color: #fff;
+    font-weight: 700;
+    padding: 10px 14px;
     cursor: pointer;
-
+    width: 100%;
 }
 
-
-.history-nav-item.active {
-
-    color: #079c75;
-
-}
-
-
-.history-nav-item svg {
-
-    stroke-width: 2.5;
-
-}
-
-
-
-/* =========================================================
-   MOBILE
-========================================================= */
-
-@media (max-width: 600px) {
-
-    .history-header {
-
-        height: 104px;
-
-        padding-top: 44px;
-
-    }
-
-
-    .history-empty {
-
-        padding-top: 91px;
-
-    }
-
-}
-
-
-
-/* =========================================================
-   TABLET
-========================================================= */
-
-@media (min-width: 601px) and (max-width: 1000px) {
-
-    .history-header {
-
-        padding-left: 30px;
-
-    }
-
-
-    .history-empty {
-
-        padding-top: 120px;
-
-    }
-
-}
-
-
-
-/* =========================================================
-   DESKTOP
-========================================================= */
-
-@media (min-width: 1001px) {
-
+@media (max-width: 768px) {
     .history-page {
-
-        background: #f7f8f7;
-
+        padding-bottom: 76px;
     }
-
 
     .history-header {
-
-        max-width: 900px;
-
-        margin: 0 auto;
-
-        background: white;
-
-        padding-left: 30px;
-
-        padding-top: 40px;
-
-        height: 115px;
-
+        padding-left: 16px;
+        padding-right: 16px;
     }
 
-
-    .history-header h1 {
-
-        font-size: 26px;
-
+    .rides-list {
+        padding-left: 12px;
+        padding-right: 12px;
     }
 
-
-    .history-header p {
-
-        font-size: 13px;
-
+    .ride-card-meta {
+        grid-template-columns: 1fr;
     }
 
-
-    .history-empty {
-
-        padding-top: 140px;
-
+    .ride-card-bottom {
+        justify-content: flex-start;
     }
-
-
-    .history-empty h2 {
-
-        font-size: 16px;
-
-    }
-
-
-    .history-empty p {
-
-        font-size: 13px;
-
-    }
-
-
-    .history-bottom-nav {
-
-        height: 70px;
-
-        justify-content: center;
-
-        gap: 180px;
-
-    }
-
-
-    .history-nav-item {
-
-        width: 90px;
-
-        height: 70px;
-
-        font-size: 11px;
-
-    }
-
 }

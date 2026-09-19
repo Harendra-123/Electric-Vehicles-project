@@ -454,3 +454,74 @@
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Header container for Title & Tabs */
+.registered-users-card .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* Filter tab buttons styling */
+.filter-tabs {
+  display: flex;
+  gap: 6px;
+  background-color: #f1f5f9;
+  padding: 4px;
+  border-radius: 8px;
+}
+
+.filter-btn {
+  padding: 6px 14px;
+  border: none;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  color: #64748b;
+  transition: all 0.2s ease;
+}
+
+.filter-btn.active {
+  background-color: #ffffff;
+  color: #0f172a;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* User vs Driver Role Indicator Badge */
+.role-badge {
+  margin-left: auto;
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.role-badge.driver {
+  background-color: #e0f2fe;
+  color: #0369a1;
+}
+
+.role-badge.user {
+  background-color: #f1f5f9;
+  color: #475569;
+}

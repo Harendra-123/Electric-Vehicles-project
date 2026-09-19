@@ -1,29 +1,20 @@
-// import React from "react";
+import React from "react";
+import { Outlet } from "react-router-dom";
 
-// import UserSidebar from "../components/UserSidebar/UserSidebar";
+import UserNavigation from "../components/UserNavigation/UserNavigation";
 
-// import "./UserLayout.css";
+import "./UserLayout.css";
 
+function UserLayout() {
+  return (
+    <div className="user-layout">
+      <UserNavigation />
 
-// const UserLayout = ({ children }) => {
+      <main className="user-layout-content">
+        <Outlet />
+      </main>
+    </div>
+  );
+}
 
-//     return (
-
-//         <div className="user-layout">
-
-//             <UserSidebar />
-
-//             <main className="user-layout-content">
-
-//                 {children}
-
-//             </main>
-
-//         </div>
-
-//     );
-
-// };
-
-
-// export default UserLayout;
+export default UserLayout;

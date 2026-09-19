@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../config/db");
-const authMiddleware = require("../middleware/authMiddleware"); // Middleware import add kar diya h
+const authMiddleware = require("../middleware/authMiddleware");
 
 // ================= CREATE PAYMENT =================
 router.post(
@@ -46,9 +46,6 @@ router.post(
                 }
 
                 const ride = rides[0];
-                console.log("Ride User ID:", ride.user_id);
-                console.log("Logged In User ID:", req.user.id);
-                
 
                 if (ride.status !== "completed") {
                     return res.status(400).json({
@@ -106,7 +103,42 @@ router.post(
 );
 
 // ================= GET PAYMENT BY RIDE =================
-router.get("/ride/:rideId", (req, res) => {
+router.get("/my-payments", authMiddleware, (req, res) => {
+    const userId = req.user.id;
+
+    const sql = `
+        SELECT
+            p.id,
+            p.ride_id,
+            p.amount,
+            p.payment_method,
+            p.payment_status,
+            r.pickup,
+            r.destination,
+            r.status AS ride_status,
+            r.fare
+        FROM payments p
+        JOIN rides r ON r.id = p.ride_id
+        WHERE r.user_id = ?
+        ORDER BY p.id DESC
+    `;
+
+    db.query(sql, [userId], (err, results) => {
+        if (err) {
+            return res.status(500).json({
+                success: false,
+                message: "Failed to fetch user payments"
+            });
+        }
+
+        res.status(200).json({
+            success: true,
+            payments: results
+        });
+    });
+});
+
+router.get("/ride/:rideId", authMiddleware, (req, res) => {
     const rideId = req.params.rideId;
 
     const sql = `
